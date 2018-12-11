@@ -5,14 +5,22 @@ import lib.interface_script as I
 import lib.interface_graph as G
 from tkinter import * 
 
+fen = Tk()
+canvas = Canvas(fen, width=600, height=600,bg="black")
 
 def init():
-    global fen, canvas, Base, ACT
-    fen = Tk()
-    canvas = Canvas(fen, width=600, height=600,bg="black") 
+    global Base, ACT
+     
     try:
-        Base = B.BDD()
-        cmd = """CREATE TABLE STATION 
+        Base, ACT = loader()
+    except:
+        ACT = G.new_fen(fen,canvas,Button, False)
+    #print(effecteur())
+    loop()
+ 
+def loader():
+    Base = B.BDD()
+    cmd = """CREATE TABLE STATION 
         (ID INTEGER PRIMARY KEY, 
         CITY CHAR(20), 
         STATE CHAR(2), 
@@ -30,14 +38,10 @@ def init():
         SHOW COLUMNS FROM station;
         SHOW TABLES;
         """
-        text = Base.request(cmd)
-        print(text)
-        ACT = G.new_fen(fen,canvas,Button,Base)
-    except:
-        ACT = G.new_fen(fen,canvas,Button, False)
-    #print(effecteur())
-    loop()
-    
+    #text = Base.request(cmd)
+    #print(text)
+    ACT = G.new_fen(fen,canvas,Button,Base)    
+    return Base, ACT
     
 
 def effecteur():
@@ -52,7 +56,17 @@ def effecteur():
     return text
 
 def loop():
-    fen.after(100,loop)
+    global Base, ACT
+    if ACT.get_COM()[0] :
+        fen.after(100,loop)
+    elif ACT.get_COM()[1] != []:
+        SQL.add_table(Base,ACT.get_COM()[1])
+        ACT.reset_COM()
+        ACT.table_set()
+    else: 
+        B = ACT
+        init()
+        B.clean()
 
 
 

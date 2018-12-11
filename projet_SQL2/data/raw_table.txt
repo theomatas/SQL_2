@@ -1,0 +1,263 @@
+--
+-- Database: `SQL2`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Cours`
+--
+
+CREATE TABLE `Cours` (
+  `code_cours` varchar(100) NOT NULL,
+  `libelle_cours` varchar(100) NOT NULL,
+  `date_cours` date NOT NULL,
+  `heure_deb` datetime NOT NULL,
+  `heure_fin` datetime NOT NULL,
+  `type_cours` varchar(10) NOT NULL,
+  `matricule` int(11) NOT NULL,
+  `code_salle` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Eleve`
+--
+
+CREATE TABLE `Eleve` (
+  `matricule` int(11) NOT NULL,
+  `date_naissance` date NOT NULL,
+  `ville_naissance` varchar(100) NOT NULL,
+  `pays_naissance` varchar(100) NOT NULL,
+  `date_inscription` date NOT NULL,
+  `etablissement_precedent` varchar(100) NOT NULL,
+  `photo` varchar(100) NOT NULL,
+  `nom` varchar(50) NOT NULL,
+  `prenom` varchar(50) NOT NULL,
+  `date` date NOT NULL,
+  `sexe` char(5) NOT NULL,
+  `num_rue` int(11) NOT NULL,
+  `nom_rue` varchar(50) NOT NULL,
+  `ville` varchar(50) NOT NULL,
+  `code_postal` int(11) NOT NULL,
+  `tel_mobile` int(11) NOT NULL,
+  `tel_domicile` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `code_eleve` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `GRP2`
+--
+
+CREATE TABLE `GRP2` (
+  `code_cours` varchar(100) NOT NULL,
+  `matricule` int(11) NOT NULL,
+  `ID` int(11) NOT NULL,
+  `nom_GRP` varchar(10) NOT NULL,
+  `code_eleve` int(11) NOT NULL,
+  `type_GRP` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Personne`
+--
+
+CREATE TABLE `Personne` (
+  `matricule` int(11) NOT NULL,
+  `nom` varchar(50) NOT NULL,
+  `prenom` varchar(50) NOT NULL,
+  `date` date NOT NULL,
+  `sexe` char(5) NOT NULL,
+  `num_rue` int(11) NOT NULL,
+  `nom_rue` varchar(50) NOT NULL,
+  `ville` varchar(50) NOT NULL,
+  `code_postal` int(11) NOT NULL,
+  `tel_mobile` int(11) NOT NULL,
+  `tel_domicile` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Professeur`
+--
+
+CREATE TABLE `Professeur` (
+  `matricule` int(11) NOT NULL,
+  `nom` varchar(50) NOT NULL,
+  `prenom` varchar(50) NOT NULL,
+  `date` date NOT NULL,
+  `sexe` char(5) NOT NULL,
+  `num_rue` int(11) NOT NULL,
+  `nom_rue` varchar(50) NOT NULL,
+  `ville` varchar(50) NOT NULL,
+  `code_postal` int(11) NOT NULL,
+  `tel_mobile` int(11) NOT NULL,
+  `tel_domicile` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `code_professeur` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Responsables`
+--
+
+CREATE TABLE `Responsables` (
+  `matricule` int(11) NOT NULL,
+  `nom` varchar(50) NOT NULL,
+  `prenom` varchar(50) NOT NULL,
+  `date` date NOT NULL,
+  `sexe` char(5) NOT NULL,
+  `num_rue` int(11) NOT NULL,
+  `nom_rue` varchar(50) NOT NULL,
+  `ville` varchar(50) NOT NULL,
+  `code_postal` int(11) NOT NULL,
+  `tel_mobile` int(11) NOT NULL,
+  `tel_domicile` int(11) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `code_responsable` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Salle`
+--
+
+CREATE TABLE `Salle` (
+  `code_salle` int(11) NOT NULL,
+  `nom_salle` varchar(100) NOT NULL,
+  `nb_places` int(11) NOT NULL,
+  `type_salle` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `Cours`
+--
+ALTER TABLE `Cours`
+  ADD PRIMARY KEY (`code_cours`),
+  ADD KEY `Cours_Professeur_FK` (`matricule`),
+  ADD KEY `Cours_Salle0_FK` (`code_salle`);
+
+--
+-- Indexes for table `Eleve`
+--
+ALTER TABLE `Eleve`
+  ADD PRIMARY KEY (`matricule`),
+  ADD UNIQUE KEY `Eleve_AK` (`code_eleve`);
+
+--
+-- Indexes for table `GRP2`
+--
+ALTER TABLE `GRP2`
+  ADD PRIMARY KEY (`code_cours`,`matricule`),
+  ADD KEY `GRP2_Eleve0_FK` (`matricule`);
+
+--
+-- Indexes for table `Personne`
+--
+ALTER TABLE `Personne`
+  ADD PRIMARY KEY (`matricule`);
+
+--
+-- Indexes for table `Professeur`
+--
+ALTER TABLE `Professeur`
+  ADD PRIMARY KEY (`matricule`),
+  ADD UNIQUE KEY `Professeur_AK` (`code_professeur`);
+
+--
+-- Indexes for table `Responsables`
+--
+ALTER TABLE `Responsables`
+  ADD PRIMARY KEY (`matricule`),
+  ADD UNIQUE KEY `Responsables_AK` (`code_responsable`);
+
+--
+-- Indexes for table `Salle`
+--
+ALTER TABLE `Salle`
+  ADD PRIMARY KEY (`code_salle`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `Eleve`
+--
+ALTER TABLE `Eleve`
+  MODIFY `code_eleve` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `Personne`
+--
+ALTER TABLE `Personne`
+  MODIFY `matricule` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `Professeur`
+--
+ALTER TABLE `Professeur`
+  MODIFY `code_professeur` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `Responsables`
+--
+ALTER TABLE `Responsables`
+  MODIFY `code_responsable` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `Salle`
+--
+ALTER TABLE `Salle`
+  MODIFY `code_salle` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `Cours`
+--
+ALTER TABLE `Cours`
+  ADD CONSTRAINT `Cours_Professeur_FK` FOREIGN KEY (`matricule`) REFERENCES `Professeur` (`matricule`),
+  ADD CONSTRAINT `Cours_Salle0_FK` FOREIGN KEY (`code_salle`) REFERENCES `Salle` (`code_salle`);
+
+--
+-- Constraints for table `Eleve`
+--
+ALTER TABLE `Eleve`
+  ADD CONSTRAINT `Eleve_Personne_FK` FOREIGN KEY (`matricule`) REFERENCES `Personne` (`matricule`);
+
+--
+-- Constraints for table `GRP2`
+--
+ALTER TABLE `GRP2`
+  ADD CONSTRAINT `GRP2_Cours_FK` FOREIGN KEY (`code_cours`) REFERENCES `Cours` (`code_cours`),
+  ADD CONSTRAINT `GRP2_Eleve0_FK` FOREIGN KEY (`matricule`) REFERENCES `Eleve` (`matricule`);
+
+--
+-- Constraints for table `Professeur`
+--
+ALTER TABLE `Professeur`
+  ADD CONSTRAINT `Professeur_Personne_FK` FOREIGN KEY (`matricule`) REFERENCES `Personne` (`matricule`);
+
+--
+-- Constraints for table `Responsables`
+--
+ALTER TABLE `Responsables`
+  ADD CONSTRAINT `Responsables_Personne_FK` FOREIGN KEY (`matricule`) REFERENCES `Personne` (`matricule`);
