@@ -15,12 +15,19 @@ def add_table(Base,lst):
         except:
             data += "'" + value + "'"
         data += ", "
+        
     data = data[:-2]
-   
     cmd = insertor(table,data)
-    print(cmd)
-    text = Base.request(cmd)
-    print(text)    
+    text = Base.request_line(cmd)
+    return text    
     
+def see_table(Base,lst):
+    cmd = selector(lst[1],"""*""")
+    text = Base.request_line(cmd)
+    return text    
     
+def test(Base):
+    cmd = selector("""salle""","""*""")
+    text = Base.request_line(cmd)
+    return text      
     

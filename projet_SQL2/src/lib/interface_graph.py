@@ -6,10 +6,13 @@ import lib.pages.chargement as chargement
 import lib.pages.table as table
 import lib.pages.edit as edit
 import lib.pages.edit_table as edit_table
+import lib.pages.table_display_item as table_display_item
+import lib.pages.fen_clean as fen_clean
 
 class new_fen ():
-       def __init__(self,fen,canvas,Button,BDD):
+       def __init__(self,fen,canvas,Button,BDD,law):
               self.fen = fen
+              self.law = law
               self.canvas = canvas              
               self.COM = [True,[]]
               self.bouton = []
@@ -17,67 +20,74 @@ class new_fen ():
               self.table_set()
               self.fen_1()
               
+# fenetre d'acceuil.
+
        def fen_1(self):
               menu.main(self)   
               
-       def consulter(self):
-              table_display.main(self)
+# fenetre d'information et hors connection.
               
-       def editer(self):
-              edit.main(self)
-             
-              
-       def clean(self):
-              for i in self.bouton:
-                     try:
-                            i.destroy()
-                     except:
-                            try:
-                                   i.get_ent().destroy()
-                            except:
-                                   self.canvas.delete(i) 
        def info(self):
-              info.main(self)   
+              info.main(self)      
               
+# relance une nouvelle connection.
+              
+       def reload(self):
+              chargement.main(self)       
+              
+# gestion des elements de l'interface.
+              
+       def clean(self):            
+              fen_clean.main(self) 
+       
+       def last(self):
+              return self.bouton[-1]
+       
+       
+# gestion de COM varible gerant la communication interface/main (BBD).
+       
        def get_COM(self):
               return self.COM
        
        def reset_COM(self):
               self.COM = [True,[]]
-       
-       def reload(self):
-              chargement.main(self)
               
        def load(self):
               self.COM[0] = False
               
+       def unload(self):
+              self.COM[0] = True
+              
+       def set_COM(self,COM):
+              self.COM[1] = COM
+              
+# recuperer le nom des tables et ceux de leurs colonnes.
+       
        def table_set(self):
-              table.main(self)
-    
-       def insert(self,table):
-              edit_table.main(self,table)
+              table.main(self)       
+              
+# consulter les tables
+              
+       def consulter(self):
+              table_display.main(self)            
               
        def select(self,num):
-              self.clean()
-              bouton = []
-              canvas = self.canvas
-              fen = self.fen
-              patryck = PhotoImage(file= "../image/binary.gif")
-              bouton.append(canvas.create_image(300, 300, image = patryck))
-              canvas.image = patryck       
-              bouton.append(canvas.create_rectangle( 25,25,575,490,  fill = "silver" ))
-              bouton.append(Button(fen, text="Retour", command=self.consulter,bg="orangered",font=('Helvetica', '10'), width = 25, height = 3))
-              for i in range(len(bouton)):
-                     try:
-                            bouton[i].place(x = 175 , y = i*85 + 340 )
-                     except:
-                            pass
-
-              for i in range(len(self.table[num][1])):
-                     bouton.append(Button(fen, text=str(self.table[num][1][i]), bg="khaki",font=('Helvetica', '10'), width = 15, height = 2))
-                     bouton[-1].pack()
-                     bouton[-1].place(x = 50 + 180 * (i%3)  , y = i//3*70 + 100 )
-                    
-              bouton.append(canvas.create_text( 300,50 , text = "Selectioner une colone" , font=('Helvetica', '25'), fill = "red" )) 
+              self.COM = [False,["selection" ,self.table[num][0]]]
               
-              self.bouton = bouton
+       def select_tab(self,text):
+              table_display_item.main(self,text)
+              
+# editer les tables
+              
+       def editer(self):
+              edit.main(self)
+             
+       def insert(self,table):
+              edit_table.main(self,table)
+
+# autorisation
+
+       def set_law(self,value):
+              self.law = value
+              
+       

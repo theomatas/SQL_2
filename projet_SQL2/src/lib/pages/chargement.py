@@ -2,7 +2,7 @@ from tkinter import *
 
 def main(self):
      self.clean()
-     self.COM[0] = False
+     self.COM = [False,[]]
      bouton = []
      canvas = self.canvas
      fen = self.fen

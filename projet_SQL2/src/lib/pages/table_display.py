@@ -23,6 +23,7 @@ def main(self):
         bouton[-1].pack()
         bouton[-1].place(x = 50 + 180 * (i%3)  , y = i//3*70 + 100 )
 
-    bouton.append(canvas.create_text( 300,50 , text = "Selectioner une table" , font=('Helvetica', '25'), fill = "red" ))                                          
+    bouton.append(canvas.create_text( 300,50 , text = "Selectioner une table" , font=('Helvetica', '25'), fill = "red" ))          
+    
     self.bouton = bouton
     return self
