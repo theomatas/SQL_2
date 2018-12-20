@@ -60,3 +60,7 @@ def effecteur():
         cmd = SQL.insertor(res[1][0],res[1][1])
     text = Base.request_line(cmd)
     return text
+
+
+#DELETE FROM `table`
+#WHERE condition

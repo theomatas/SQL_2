@@ -25,8 +25,8 @@ def main(self):
             bouton[i].place(x = -300 + i * 175 , y = 500 )
         except:
             pass
-    local_date = str(zero(self.date[0][0])) + "/" + str(zero(self.date[0][1])) + "/" + str(zero(self.date[0][2])) + " - "
-    local_date += str(zero(self.date[1][0])) + "/" + str(zero(self.date[1][1])) + "/" + str(zero(self.date[1][2]))
+    local_date = zero(self.date[0][0]) + "/" + zero(self.date[0][1]) + "/" + zero(self.date[0][2]) + " - "
+    local_date += zero(self.date[1][0]) + "/" + zero(self.date[1][1]) + "/" + zero(self.date[1][2])
     bouton.append(canvas.create_text( 300,80, text= local_date, font=('Helvetica', '15'), fill = "red" ))        
     x1,y1,x2,y2 = 30, 150 - 20  , 90 , 150 + 20  
     bouton.append(canvas.create_rectangle( x1,y1,x2,y2, fill = "red")) 
@@ -56,7 +56,9 @@ def main(self):
 def zero(val):
     if val == 0:
         return "00"
-    return val
+    if val < 10:
+        return "0" + str(val)
+    return str(val)
 
 def planning(date):
     days = ["lundi","mardi","mercredi","jeudi","vendredi","samedi","dimanche"]

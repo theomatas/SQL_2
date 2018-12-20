@@ -111,7 +111,7 @@ class new_fen ():
               for i in [0,1]:
                      self.date[i][0] += 7
                      if self.date[i][0] > self.mois[self.date[i][1] - 1]:
-                            self.date[i][0] = self.date[i][0]%self.mois[self.date[i][1] - 1] + 1
+                            self.date[i][0] -= self.mois[self.date[i][1] - 1]
                             self.date[i][1] += 1
                      if self.date[i][1] > 12:
                             self.date[i][1] = 1
@@ -128,6 +128,6 @@ class new_fen ():
                      if self.date[i][1] < 1:
                             self.date[i][1] = 12
                             self.date[i][2] -= 1
-                            self.date[i][0] += self.mois[(self.date[i][1]) - 1]
+                            self.date[i][0] += 31
                             
               self.select_etudiant()

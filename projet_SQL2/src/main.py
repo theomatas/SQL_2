@@ -32,7 +32,7 @@ def loop():
     if ACT.get_COM()[0]: 
         if test_connection():
             data = D.main(Base)
-            #print(data)
+            print(data)
             ACT.set_data(data)
         fen.after(100,loop)
     elif ACT.get_COM()[1] != [] and ACT.get_COM()[1] != "no signal":
