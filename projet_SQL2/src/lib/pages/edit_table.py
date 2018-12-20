@@ -21,9 +21,14 @@ def main(self,table):
     self.COM[1] = ["insertion"]
     self.COM[1].append(str(self.table[table][0]))
     for i in range(len(self.table[table][1])):
-        x1,y1,x2,y2 = 40 , 22*i + 50 - 10 , 40 + 200  , 50 + 22*i + 10
+        x1,y1,x2,y2 = 50 , 22*i + 50 - 10 , 70 + 200  , 50 + 22*i + 10
         bouton.append(canvas.create_rectangle( x1,y1,x2,y2, fill = "khaki"))
-        bouton.append(canvas.create_text( (x1+x2)//2, (y1+y2)//2, text=str(self.table[table][1][i]) , font=('Helvetica', '10'), fill = "red" ))
+        opt = ""
+        if str(self.table[table][1][i])[0] == 'H':
+            opt = " HH-MM"
+        if str(self.table[table][1][i])[0:4] == 'Date':
+            opt = " JJ-MM-AA"        
+        bouton.append(canvas.create_text( (x1+x2)//2, (y1+y2)//2, text=str(self.table[table][1][i]) + opt, font=('Helvetica', '10'), fill = "red" ))
         bouton.append(input_text(fen,x1+250,y1,30))
         self.COM[1].append(bouton[-1])
     bouton.append(display_text(canvas,300,490,10))

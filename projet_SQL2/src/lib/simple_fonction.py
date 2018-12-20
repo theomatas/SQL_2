@@ -33,4 +33,9 @@ def parser(text,char):
         lst.append(line)
     return lst
 
+def is_inside(lst,a):
+    for i in lst:
+        if a == i:
+            return True
+    return False
 

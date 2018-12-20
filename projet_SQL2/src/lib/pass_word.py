@@ -1,6 +1,17 @@
-def main(text):
+def main(text,etudiant):
     try:
-        return ["etudiant","prof","admin"].index(text) + 1
+        return [["prof","admin"].index(text) + 2, text]
     except:
-        return False
-    
+        try:
+            matricul = etudiant[matricule(etudiant).index(text)][0]
+            nom = etudiant[matricule(etudiant).index(text)][1]
+            prenom = etudiant[matricule(etudiant).index(text)][2]
+            return [1,prenom + " " + nom, matricul]
+        except:
+            return False
+
+def matricule(etudiant):
+    M = []
+    for i in etudiant:
+        M.append(i[0])
+    return M

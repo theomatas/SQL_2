@@ -10,5 +10,8 @@ def main(self):
             try:
                 i.get_ent().destroy()
             except:
-                self.canvas.delete(i)    
+                try:
+                    self.canvas.delete(i.get_ent())
+                except:
+                    self.canvas.delete(i)    
   

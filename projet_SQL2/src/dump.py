@@ -48,3 +48,15 @@ def select(self,num):
     bouton.append(canvas.create_text( 300,50 , text = "Selectioner une colone" , font=('Helvetica', '25'), fill = "red" )) 
 
     self.bouton = bouton
+    
+    
+    
+def effecteur():
+    res = I.listerner()
+    if res[0] == 0:
+        
+        cmd = SQL.selector(res[1][0],res[1][1])
+    if res[0] == 1:
+        cmd = SQL.insertor(res[1][0],res[1][1])
+    text = Base.request_line(cmd)
+    return text

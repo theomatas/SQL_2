@@ -8,15 +8,19 @@ import lib.pages.edit as edit
 import lib.pages.edit_table as edit_table
 import lib.pages.table_display_item as table_display_item
 import lib.pages.fen_clean as fen_clean
+import lib.pages.etudiant_planning as etudiant_planning
 
 class new_fen ():
-       def __init__(self,fen,canvas,Button,BDD,law):
+       def __init__(self,fen,canvas,Button,BDD,law,data):
               self.fen = fen
-              self.law = law
+              self.law = [law,None]
               self.canvas = canvas              
               self.COM = [True,[]]
               self.bouton = []
               self.BDD = BDD
+              self.data = data
+              self.date = [[17,12,18],[23,12,18]]
+              self.mois = [31,28,31,30,31,30,31,31,30,31,30,31]
               self.table_set()
               self.fen_1()
               
@@ -64,8 +68,16 @@ class new_fen ():
 # recuperer le nom des tables et ceux de leurs colonnes.
        
        def table_set(self):
-              table.main(self)       
+              self.table = table.main(self)       
               
+# donne des tables
+       
+       def set_data(self,data):
+              self.data = data
+              
+       def get_data(self):
+              return self.data
+       
 # consulter les tables
               
        def consulter(self):
@@ -73,6 +85,9 @@ class new_fen ():
               
        def select(self,num):
               self.COM = [False,["selection" ,self.table[num][0]]]
+              
+       def select_etudiant(self):
+              etudiant_planning.main(self)
               
        def select_tab(self,text):
               table_display_item.main(self,text)
@@ -90,4 +105,29 @@ class new_fen ():
        def set_law(self,value):
               self.law = value
               
-       
+# actualisation des dates
+
+       def plus(self):
+              for i in [0,1]:
+                     self.date[i][0] += 7
+                     if self.date[i][0] > self.mois[self.date[i][1] - 1]:
+                            self.date[i][0] = self.date[i][0]%self.mois[self.date[i][1] - 1] + 1
+                            self.date[i][1] += 1
+                     if self.date[i][1] > 12:
+                            self.date[i][1] = 1
+                            self.date[i][2] += 1
+              self.select_etudiant()
+
+       def moins(self):
+              for i in [0,1]:
+                     self.date[i][0] -= 7
+                     if self.date[i][0] < 1:
+                            self.date[i][1] -= 1
+                            if self.date[i][1] >= 1:
+                                   self.date[i][0] += self.mois[(self.date[i][1]) - 1]
+                     if self.date[i][1] < 1:
+                            self.date[i][1] = 12
+                            self.date[i][2] -= 1
+                            self.date[i][0] += self.mois[(self.date[i][1]) - 1]
+                            
+              self.select_etudiant()
