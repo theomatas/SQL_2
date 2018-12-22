@@ -47,7 +47,7 @@ def main(self):
             posX = day.index(jour)
             posY = hour.index(text[i][1][0])
             date = str(zero(text[i][6][0])) + "/" + str(zero(text[i][6][1])) + "/" + str(zero(text[i][6][2]))
-            x1,y1,x2,y2 = 95 + pos * 65, 42*posY + 192 - 20 , 155 + pos * 65  , 192 + 42*posY + 20
+            x1,y1,x2,y2 = 93 + pos * 68, 42*posY + 192 - 20 , 158 + pos * 68  , 192 + 42*posY + 20
             if d == jour and date_in(self.date,text[i][6]):
                 bouton.append(canvas.create_rectangle( x1,y1,x2,y2, fill = "khaki"))        
                 bouton.append(canvas.create_text( (x1+x2)//2, (y1+y2)//2, text= nom, font=('Helvetica', '6'), fill = "red" ))    

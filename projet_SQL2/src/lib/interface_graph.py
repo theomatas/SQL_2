@@ -11,6 +11,7 @@ import lib.pages.fen_clean as fen_clean
 import lib.pages.etudiant_planning as etudiant_planning
 import lib.pages.poping as poping
 import lib.toggle as toggle
+import lib.planning_calcule as planning
 
 class new_fen ():
        def __init__(self,fen,canvas,Button,BDD,law,data):
@@ -22,7 +23,6 @@ class new_fen ():
               self.BDD = BDD
               self.data = data
               self.date = [[17,12,18],[23,12,18]]
-              self.mois = [31,28,31,30,31,30,31,31,30,31,30,31]
               self.table_set()
               self.event = []
               self.info_bouton = []
@@ -148,25 +148,7 @@ class new_fen ():
 # actualisation des dates
 
        def plus(self):
-              for i in [0,1]:
-                     self.date[i][0] += 7
-                     if self.date[i][0] > self.mois[self.date[i][1] - 1]:
-                            self.date[i][0] -= self.mois[self.date[i][1] - 1]
-                            self.date[i][1] += 1
-                     if self.date[i][1] > 12:
-                            self.date[i][1] = 1
-                            self.date[i][2] += 1
-              self.select_etudiant()
+              planning.plus(self)
 
        def moins(self):
-              for i in [0,1]:
-                     self.date[i][0] -= 7
-                     if self.date[i][0] < 1:
-                            self.date[i][1] -= 1
-                            if self.date[i][1] >= 1:
-                                   self.date[i][0] += self.mois[(self.date[i][1]) - 1]
-                     if self.date[i][1] < 1:
-                            self.date[i][1] = 12
-                            self.date[i][2] -= 1
-                            self.date[i][0] += 31
-              self.select_etudiant()
+              planning.moins(self)

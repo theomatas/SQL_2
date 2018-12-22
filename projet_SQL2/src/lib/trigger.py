@@ -1,5 +1,7 @@
 import lib.sql_fonction as SQL
-
+import calendar
+import lib.planning_calcule as P
+import copy
 
 def main(base,data):
     sup = []
@@ -45,16 +47,31 @@ def time_hour(base,data):
 def time_simul_eleve(base,data):
     sup = []
     lst = []
+    day = ["lundi","mardi","mercredi","jeudi","vendredi","samedi","dimanche"]
     for i in range(len(data[1])):        
         for A in data[1][i][4]:
-            count = 0
+            count_day = 0
+            count_week = 0
             dej12 = False
             dej14 = False
+            date = creat_date(A[6])
+            if planning(A[6]) == "dimanche":
+                out = "Cours " + A[0] + " pas le dimanche !!!\n"
+                out += base.request_line(SQL.droper("cours","CodeC = '"  + A[0] + "'") )    
+                sup.append(out)
+                lst.append(A)               
             for B in data[1][i][4]:
                 if not is_inside(lst,A) and not is_inside(lst,B):
                     if A != B and A[6] == B[6] and not is_inside(lst,B):
-                        count += 1
-                    if A != B and A[6] == B[6] and count >= 4 and not is_inside(lst,B):
+                        count_day += 1
+                    if A != B and date_in(date,B[6]) and not is_inside(lst,B):
+                        count_week += 1
+                    if A != B and date_in(date,B[6]) and count_week >= 15 and not is_inside(lst,B):
+                        out = "Cours " + B[0] + " trop d'heure pour un eleve en une semaine\n"
+                        out += base.request_line(SQL.droper("cours","CodeC = '"  + B[0] + "'") )    
+                        sup.append(out)
+                        lst.append(B)    
+                    if A != B and A[6] == B[6] and count_day >= 4 and not is_inside(lst,B):
                         out = "Cours " + B[0] + " trop d'heure pour un eleve en une journee\n"
                         out += base.request_line(SQL.droper("cours","CodeC = '"  + B[0] + "'") )    
                         sup.append(out)
@@ -74,6 +91,25 @@ def time_simul_eleve(base,data):
                         sup.append(out)
                         lst.append(B)
     return sup
+
+def planning(date):
+    days = ["lundi","mardi","mercredi","jeudi","vendredi","samedi","dimanche"]
+    return days[calendar.weekday(date[2] + 2000,date[1],date[0])]   
+
+def date_in(date,day):
+    jour = date[0][0] <= day[0] <= date[1][0]
+    mois = date[0][1] <= day[1] <= date[1][1]
+    an = date[0][2] <= day[2] <= date[1][2]
+    return jour and mois and an
+
+def creat_date(date):
+    debut = copy.deepcopy(date)
+    fin = copy.deepcopy(date)
+    while planning(debut) != "lundi":
+        debut = P.moins_day(debut)
+    while planning(fin) != "dimanche":
+        fin = P.plus_day(fin)
+    return [debut,fin]
     
 def is_inside(lst,char):
     for i in lst:
@@ -81,15 +117,3 @@ def is_inside(lst,char):
             return True
     return False
     
-def bool_cour(A,B):
-    if A[6][2] != B[6][2]:
-        return False
-    if A[6][1] != B[6][1]:
-        return False
-    if A[6][0] != B[6][0]:
-        return False   
-    if A[1][0] != B[1][0]:
-        return False   
-    if A[1][1] != B[1][1]:
-        return False  
-    return True
