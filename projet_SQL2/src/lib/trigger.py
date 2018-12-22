@@ -63,7 +63,6 @@ def time_simul_eleve(base,data):
                         dej12 = True
                     if A[6] == B[6] and B[1][0] == 14 and not is_inside(lst,B):
                         dej14 = True    
-                    print(dej12,dej14)
                     if dej14 and dej12:
                         out = "Cours " + B[0] + " bloque une pause dej\n"
                         out += base.request_line(SQL.droper("cours","CodeC = '"  + B[0] + "'") )
