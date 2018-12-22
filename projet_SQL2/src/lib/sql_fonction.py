@@ -35,6 +35,18 @@ def remplace_table(Base,lst,all_table):
     cmd = droper(table, str(clmn) + " = '"  + data + "'")
     text = Base.request_line(cmd)
     return add_table(Base,lst)   
+
+def drop_table(Base,lst,all_table):
+    table = lst[0]
+    ind = 0
+    for i in range(len(all_table)):
+        if all_table[i][0] == table:
+            ind = i
+    clmn = all_table[ind][1][0]
+    data = lst[1].get_text()
+    cmd = droper(table, str(clmn) + " = '"  + data + "'")
+    text = Base.request_line(cmd)
+    return text  
     
 def see_table(Base,lst):
     cmd = selector(lst[1],"""*""")

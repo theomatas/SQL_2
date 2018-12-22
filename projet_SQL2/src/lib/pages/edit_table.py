@@ -12,12 +12,14 @@ def main(self,table):
     bouton.append(canvas.create_image(300, 300, image = patryck))
     canvas.image = patryck       
     bouton.append(canvas.create_rectangle( 25,20,575,500,  fill = "silver" ))
-    bouton.append(Button(fen, text="Inserer", command=self.load_insertion,bg="dodgerblue",font=('Helvetica', '10'), width = 15, height = 3))    
-    bouton.append(Button(fen, text="Retour", command=self.editer,bg="orangered",font=('Helvetica', '10'), width = 15, height = 3))
-    bouton.append(Button(fen, text="Remplacer", command=self.load_remplace,bg="lightgreen",font=('Helvetica', '10'), width = 15, height = 3))
+     
+    bouton.append(Button(fen, text="Retour", command=self.editer,bg="orangered",font=('Helvetica', '10'), width = 12, height = 3))
+    bouton.append(Button(fen, text="Inserer", command=self.load_insertion,bg="dodgerblue",font=('Helvetica', '10'), width = 12, height = 3))   
+    bouton.append(Button(fen, text="Remplacer", command=self.load_remplace,bg="lightgreen",font=('Helvetica', '10'), width = 12, height = 3))
+    bouton.append(Button(fen, text="Suprimer", command=self.load_drop,bg="salmon",font=('Helvetica', '10'), width = 12, height = 3))
     for i in range(len(bouton)):
         try:
-            bouton[i].place(x = -300 + i * 175 , y = 520 )
+            bouton[i].place(x = -200 + i * 125 , y = 520 )
         except:
             pass
     self.COM[1].append(str(self.table[table][0]))

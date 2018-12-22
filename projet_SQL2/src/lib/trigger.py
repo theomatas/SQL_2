@@ -9,6 +9,7 @@ def main(base,data):
     sup += time_simul(base,data)
     sup += time_hour(base,data)
     sup += time_simul_eleve(base,data)
+    sup += fill(base,data)
     return sup
 
 def place(base):
@@ -34,6 +35,19 @@ def time_simul(base,data):
                     sup.append(out)
                     lst.append(B)
     return sup
+
+    
+
+def fill(base,data):
+    lst = get_table(base)
+    sup = []
+    for A in data[0]:
+        if not is_inside(lst[0],A[3]) or not is_inside(lst[1],A[4]) or not is_inside(lst[2],A[5]):
+            out = "Cours " + A[0] + " pas de groupe, salle ou prof\n"
+            out += base.request_line(SQL.droper("cours","CodeC = '"  + A[0] + "'") )
+            sup.append(out)
+    return sup
+
 def time_hour(base,data):
     sup = []
     hour = [8,10,12,14,16,18]
@@ -110,6 +124,28 @@ def creat_date(date):
     while planning(fin) != "dimanche":
         fin = P.plus_day(fin)
     return [debut,fin]
+    
+def get_table(base):
+    M = []
+    data = []
+    cmd = SQL.selector("salle","*")
+    text = base.request_line(cmd)
+    for i in text:
+        data.append(i[0])
+    M.append(data)
+    data = []
+    cmd = SQL.selector("professeur","*")
+    text = base.request_line(cmd)
+    for i in text:
+        data.append(i[0])
+    M.append(data)
+    data = []
+    cmd = SQL.selector("grp","*")
+    text = base.request_line(cmd)
+    for i in text:
+        data.append(i[1]) 
+    M.append(data)
+    return M
     
 def is_inside(lst,char):
     for i in lst:

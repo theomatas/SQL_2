@@ -18,5 +18,9 @@ def main(self,text):
     for i in range(len(text)):
         x1,y1,x2,y2 = 30 , 22*i + 50 - 10 , 570  , 50 + 22*i + 10
         bouton.append(canvas.create_rectangle( x1,y1,x2,y2, fill = "khaki"))
-        bouton.append(canvas.create_text( (x1+x2)//2, (y1+y2)//2, text= text[i] , font=('Helvetica', '10'), fill = "red" ))    
+        if len(text[i]) > 7:
+            bouton.append(canvas.create_text( (x1+x2)//2, (y1+y2)//2, text=text[i][:3]  , font=('Helvetica', '10'), fill = "red" ))  
+        else:
+            bouton.append(canvas.create_text( (x1+x2)//2, (y1+y2)//2, text=text[i]  , font=('Helvetica', '10'), fill = "red" ))  
+            
     self.bouton = bouton

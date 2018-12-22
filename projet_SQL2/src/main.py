@@ -54,6 +54,11 @@ def loop():
             ACT.last().set_text(text)
             ACT.unload()
             fen.after(1000,loop)
+        if ACT.get_COM()[1][0] == "suprimer":
+            text = SQL.drop_table(Base,ACT.get_COM()[1][1:],ACT.get_table())
+            ACT.last().set_text(text)
+            ACT.unload()
+            fen.after(1000,loop)
         if ACT.get_COM()[1][0] == "selection":
             text = SQL.see_table(Base,ACT.get_COM()[1])
             ACT.select_tab(text)

@@ -70,17 +70,24 @@ class new_fen ():
               self.COM[1] = COM
               
        def load_insertion(self):
-              if self.COM[1][0] != "insertion" and self.COM[1][0] != "remplacer":
+              if self.COM[1][0] != "insertion" and self.COM[1][0] != "remplacer" and self.COM[1][0] != "suprimer":
                      self.COM[1] = ["insertion"] + self.COM[1]
               else:
                      self.COM[1][0] = "insertion"
               self.load()
               
        def load_remplace(self):
-              if self.COM[1][0] != "insertion" and self.COM[1][0] != "remplacer":
+              if self.COM[1][0] != "insertion" and self.COM[1][0] != "remplacer" and self.COM[1][0] != "suprimer":
                      self.COM[1] = ["remplacer"] + self.COM[1]
               else:
                      self.COM[1][0] = "remplacer"
+              self.load()
+              
+       def load_drop(self):
+              if self.COM[1][0] != "insertion" and self.COM[1][0] != "remplacer" and self.COM[1][0] != "suprimer":
+                     self.COM[1] = ["suprimer"] + self.COM[1]
+              else:
+                     self.COM[1][0] = "suprimer"
               self.load()
               
 # recuperer le nom des tables et ceux de leurs colonnes.
