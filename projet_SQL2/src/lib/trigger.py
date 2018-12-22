@@ -48,6 +48,8 @@ def time_simul_eleve(base,data):
     for i in range(len(data[1])):        
         for A in data[1][i][4]:
             count = 0
+            dej12 = False
+            dej14 = False
             for B in data[1][i][4]:
                 if not is_inside(lst,A) and not is_inside(lst,B):
                     if A != B and A[6] == B[6] and not is_inside(lst,B):
@@ -57,6 +59,16 @@ def time_simul_eleve(base,data):
                         out += base.request_line(SQL.droper("cours","CodeC = '"  + B[0] + "'") )    
                         sup.append(out)
                         lst.append(B)
+                    if A[6] == B[6] and B[1][0] == 12 and not is_inside(lst,B):
+                        dej12 = True
+                    if A[6] == B[6] and B[1][0] == 14 and not is_inside(lst,B):
+                        dej14 = True    
+                    print(dej12,dej14)
+                    if dej14 and dej12:
+                        out = "Cours " + B[0] + " bloque une pause dej\n"
+                        out += base.request_line(SQL.droper("cours","CodeC = '"  + B[0] + "'") )
+                        sup.append(out)
+                        lst.append(B)                    
                     if A != B and A[1:3] == B[1:3] and A[6] == B[6] and not is_inside(lst,B):
                         out = "Cours " + B[0] + " meme creneau qu'un autre cour pour un eleve\n"
                         out += base.request_line(SQL.droper("cours","CodeC = '"  + B[0] + "'") )

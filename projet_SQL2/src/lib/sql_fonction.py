@@ -33,9 +33,7 @@ def remplace_table(Base,lst,all_table):
     clmn = all_table[ind][1][0]
     data = lst[1].get_text()
     cmd = droper(table, str(clmn) + " = '"  + data + "'")
-    print(cmd)
     text = Base.request_line(cmd)
-    print(text)
     return add_table(Base,lst)   
     
 def see_table(Base,lst):
