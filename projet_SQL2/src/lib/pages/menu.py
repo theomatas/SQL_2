@@ -47,7 +47,7 @@ def main(self):
     else:
         bouton.append(canvas.create_text( 300,125 , text = "MINI_PLANNING" , font=('Helvetica', '30'), fill = "red" ))    
         
-    bouton.append(display_text(canvas,300,250,30))
+    bouton.append(display_text(canvas,300,250,25))
     if self.law[0] != 0:
         
         for i in range(len(bouton)):

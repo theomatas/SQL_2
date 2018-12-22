@@ -19,9 +19,10 @@ def main(self):
         except:
             pass              
     for i in range(len(self.table)):
-        bouton.append(Button(fen, text=str(self.table[i][0]), command= lambda i=i: self.insert(i), bg="khaki",font=('Helvetica', '10'), width = 15, height = 2))
-        bouton[-1].pack()
-        bouton[-1].place(x = 50 + 180 * (i%3)  , y = i//3*70 + 100 )
+        if self.law[0] != 2 or self.table[i][0] == "cours":
+            bouton.append(Button(fen, text=str(self.table[i][0]), command= lambda i=i: self.insert(i), bg="khaki",font=('Helvetica', '10'), width = 15, height = 2))
+            bouton[-1].pack()
+            bouton[-1].place(x = 50 + 180 * (i%3)  , y = i//3*70 + 100 )
 
     bouton.append(canvas.create_text( 300,50 , text = "Selectioner une option" , font=('Helvetica', '25'), fill = "red" ))                                          
 

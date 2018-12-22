@@ -5,6 +5,7 @@ import lib.interface_script as I
 import lib.interface_graph as G
 import lib.pass_word as P
 import lib.data_table as D
+import lib.trigger as T
 from tkinter import * 
 
 def fen_init():
@@ -15,10 +16,14 @@ def fen_init():
 def init():
     global Base, ACT
     try:
+        
         Base, ACT = loader()
+        
     except:
+        
         ACT = G.new_fen(fen,canvas,Button, False,0,[])
         ACT.set_COM("no signal")
+    
     loop()
  
 def loader(): 
@@ -29,27 +34,34 @@ def loader():
 
 def loop():
     global Base, ACT, data
+    if ACT.get_COM()[1] != "no signal" and ACT.get_COM()[0] and ACT.get_law()[0] > 0 and ACT.get_event() == []:
+        text = T.main(Base,data)
+        if text != [] :
+            ACT.pop_up(text)
     if ACT.get_COM()[0]: 
         if test_connection():
             data = D.main(Base)
-            print(data)
             ACT.set_data(data)
-        fen.after(100,loop)
+        fen.after(1000,loop)
     elif ACT.get_COM()[1] != [] and ACT.get_COM()[1] != "no signal":
         if ACT.get_COM()[1][0] == "insertion":
             text = SQL.add_table(Base,ACT.get_COM()[1][1:])
             ACT.last().set_text(text)
             ACT.unload()
-            fen.after(100,loop)
+            fen.after(1000,loop)
+        if ACT.get_COM()[1][0] == "remplacer":
+            text = SQL.remplace_table(Base,ACT.get_COM()[1][1:],ACT.get_table())
+            ACT.last().set_text(text)
+            ACT.unload()
+            fen.after(1000,loop)
         if ACT.get_COM()[1][0] == "selection":
             text = SQL.see_table(Base,ACT.get_COM()[1])
             ACT.select_tab(text)
             ACT.reset_COM()
-            fen.after(100,loop)     
+            fen.after(1000,loop)     
         if ACT.get_COM()[1] != [] and ACT.get_COM()[1][0] == "law":
             cmd = ACT.get_COM()[1]
             text = P.main(cmd[1].get_text(),ACT.get_data()[1])
-            print(text)
             if not text:
                 ACT.last().set_text("mot de pass inexistant")
             else:
@@ -82,6 +94,7 @@ def test_connection():
         if COM == [] or COM != "no signal":
             re_init()  
             return False
+
 
 fen_init()
 init()

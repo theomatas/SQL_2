@@ -9,6 +9,8 @@ import lib.pages.edit_table as edit_table
 import lib.pages.table_display_item as table_display_item
 import lib.pages.fen_clean as fen_clean
 import lib.pages.etudiant_planning as etudiant_planning
+import lib.pages.poping as poping
+import lib.toggle as toggle
 
 class new_fen ():
        def __init__(self,fen,canvas,Button,BDD,law,data):
@@ -22,6 +24,8 @@ class new_fen ():
               self.date = [[17,12,18],[23,12,18]]
               self.mois = [31,28,31,30,31,30,31,31,30,31,30,31]
               self.table_set()
+              self.event = []
+              self.info_bouton = []
               self.fen_1()
               
 # fenetre d'acceuil.
@@ -32,7 +36,7 @@ class new_fen ():
 # fenetre d'information et hors connection.
               
        def info(self):
-              info.main(self)      
+              info.main(self)
               
 # relance une nouvelle connection.
               
@@ -42,7 +46,7 @@ class new_fen ():
 # gestion des elements de l'interface.
               
        def clean(self):            
-              fen_clean.main(self) 
+              fen_clean.main(self,self.bouton) 
        
        def last(self):
               return self.bouton[-1]
@@ -65,10 +69,27 @@ class new_fen ():
        def set_COM(self,COM):
               self.COM[1] = COM
               
+       def load_insertion(self):
+              if self.COM[1][0] != "insertion" and self.COM[1][0] != "remplacer":
+                     self.COM[1] = ["insertion"] + self.COM[1]
+              else:
+                     self.COM[1][0] = "insertion"
+              self.load()
+              
+       def load_remplace(self):
+              if self.COM[1][0] != "insertion" and self.COM[1][0] != "remplacer":
+                     self.COM[1] = ["remplacer"] + self.COM[1]
+              else:
+                     self.COM[1][0] = "remplacer"
+              self.load()
+              
 # recuperer le nom des tables et ceux de leurs colonnes.
        
        def table_set(self):
-              self.table = table.main(self)       
+              self.table = table.main(self)      
+       
+       def get_table(self):
+              return self.table
               
 # donne des tables
        
@@ -102,8 +123,27 @@ class new_fen ():
 
 # autorisation
 
+       def get_law(self):
+              return self.law
+
        def set_law(self,value):
               self.law = value
+  
+# pop_up
+
+       def pop_up(self,text):
+              toggle.invisible(self,self.bouton)
+              poping.main(self,text)
+              
+       def clean_pop(self):
+              fen_clean.main(self,self.event) 
+              toggle.visible(self,self.bouton)
+              self.event = []
+              
+       def get_event(self):
+              return self.event
+              
+              
               
 # actualisation des dates
 
@@ -129,5 +169,4 @@ class new_fen ():
                             self.date[i][1] = 12
                             self.date[i][2] -= 1
                             self.date[i][0] += 31
-                            
               self.select_etudiant()

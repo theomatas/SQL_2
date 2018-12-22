@@ -69,18 +69,18 @@ def my_cour(cours,etudiant_data):
 def parser(A):
     A = A.split('-')
     for i in range(len(A)):
-        A[i] = int(A[i])
+        try:
+            A[i] = int(A[i])
+        except:
+            pass
     return A
         
         
 def tri_cour(cour):
-    e = True
-    while e:
-        e = False
+    for j in range(len(cour)):
         for i in range(len(cour) - 1 ):
-            if bool_cour(cour[i+1],cour[i]):
-                cour[i+1],cour[i] = cour[i],cour[i+1]
-                e = True
+                if bool_cour(cour[i+1],cour[i]):
+                    cour[i+1],cour[i] = cour[i],cour[i+1]
     return cour
             
 def bool_cour(A,B):
@@ -92,8 +92,6 @@ def bool_cour(A,B):
         return True   
     if A[1][0] < B[1][0]:
         return True   
-    if A[1][1] < B[1][1]:
-        return True  
     return False
     
     

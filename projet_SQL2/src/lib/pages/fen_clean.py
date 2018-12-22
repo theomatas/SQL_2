@@ -1,9 +1,9 @@
 from tkinter import *
 
 
-def main(self):
+def main(self,M):
     self.unload()
-    for i in self.bouton:
+    for i in M:
         try:
             i.destroy()
         except:
