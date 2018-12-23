@@ -12,6 +12,7 @@ import lib.pages.etudiant_planning as etudiant_planning
 import lib.pages.poping as poping
 import lib.toggle as toggle
 import lib.planning_calcule as planning
+import lib.CSV_maker as CSV
 
 class new_fen ():
        def __init__(self,fen,canvas,Button,BDD,law,data):
@@ -159,3 +160,10 @@ class new_fen ():
 
        def moins(self):
               planning.moins(self)
+
+# creation d'un csv
+
+       def to_csv(self):
+              for i in self.data[1]:
+                     if i[0] == self.law[2]:
+                            CSV.main(self.law[1],i[4],self.table[0][1])

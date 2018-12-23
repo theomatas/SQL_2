@@ -17,14 +17,18 @@ def main(self):
     bouton.append(canvas.create_image(300, 300, image = patryck))
     canvas.image = patryck       
     bouton.append(canvas.create_rectangle( 25,25,575,490,  fill = "silver" ))
-    bouton.append(Button(fen, text="semaine\nprecedant", command=self.moins,bg="dodgerblue",font=('Helvetica', '10'), width = 15, height = 3))    
-    bouton.append(Button(fen, text="Retour", command=self.fen_1,bg="orangered",font=('Helvetica', '10'), width = 15, height = 3))
-    bouton.append(Button(fen, text="semaine\nsuivante", command=self.plus,bg="lightgreen",font=('Helvetica', '10'), width = 15, height = 3))
+    
+    bouton.append(Button(fen,text="Retour", command=self.fen_1,bg="orangered",font=('Helvetica', '10'), width = 12, height = 3))
+    bouton.append(Button(fen, text="semaine\nprecedant", command=self.moins,bg="dodgerblue",font=('Helvetica', '10'), width = 12, height = 3))   
+    bouton.append(Button(fen, text="semaine\nsuivante", command=self.plus,bg="lightgreen",font=('Helvetica', '10'), width = 12, height = 3))
+    bouton.append(Button(fen, text="exporter\ncsv", command=self.to_csv,bg="salmon",font=('Helvetica', '10'), width = 12, height = 3))
     for i in range(len(bouton)):
         try:
-            bouton[i].place(x = -300 + i * 175 , y = 500 )
+            bouton[i].place(x = -200 + i * 125 , y = 520 )
         except:
-            pass
+            pass    
+    
+    
     local_date = zero(self.date[0][0]) + "/" + zero(self.date[0][1]) + "/" + zero(self.date[0][2]) + " - "
     local_date += zero(self.date[1][0]) + "/" + zero(self.date[1][1]) + "/" + zero(self.date[1][2])
     bouton.append(canvas.create_text( 300,80, text= local_date, font=('Helvetica', '15'), fill = "red" ))        
