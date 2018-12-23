@@ -52,7 +52,7 @@ def time_hour(base,data):
     sup = []
     hour = [8,10,12,14,16,18]
     for A in data[0]:
-            if  A[1][0] + 1 != A[2][0] or A[1][1] != 0 or A[2][1] != 45 :
+            if  A[1][0] + 1 != A[2][0] or A[1][1] != 0 or A[2][1] != 45 or not is_inside(hour,A[1][0]):
                 out = "Cours " + A[0] + " les heures ne respectent pas les creneaux\n"
                 out += base.request_line(SQL.droper("cours","CodeC = '"  + A[0] + "'") )
                 sup.append(out)

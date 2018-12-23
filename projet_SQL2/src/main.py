@@ -34,7 +34,7 @@ def loader():
 
 def loop():
     global Base, ACT, data
-    if ACT.get_COM()[1] != "no signal" and ACT.get_COM()[0] and ACT.get_law()[0] > 0 and ACT.get_event() == []:
+    if ACT.get_COM()[1] != "no signal" and ACT.get_COM()[0] and ACT.get_law()[0] > 0 and ACT.get_event() == [] and test_connection():
         text = T.main(Base,data)
         if text != [] :
             ACT.pop_up(text)
